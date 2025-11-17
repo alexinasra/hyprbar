@@ -20,7 +20,8 @@ dependencies = [
 
 exe = executable(
   'hyprbar',
-  'main.cpp',
+  'src/main.cpp',
+  'src/elements/clock.cpp',
   install : true,
   dependencies : dependencies,
 )
