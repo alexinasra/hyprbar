@@ -32,7 +32,6 @@ Clock::Clock() {
             clockLabel->rebuild()->text(std::string(timeStr))->commence();
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
-        std::println("thread ended");
     });
     tupdateThread.detach();
  
