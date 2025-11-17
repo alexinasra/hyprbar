@@ -19,15 +19,8 @@
 #include <hyprutils/memory/UniquePtr.hpp>
 #include <hyprutils/string/ConstVarList.hpp>
 #include <hyprutils/string/String.hpp>
-#include <iostream>
 #include <chrono>
-#include <iomanip>
 #include <print>
-#include <sstream> 
-#include <thread>
-#include <ctime>
-#include <atomic>
-#include <mutex>
 
 
 using namespace Hyprutils::Memory;
@@ -86,7 +79,6 @@ int main(int argc, char** argv, char** envp) {
         backend->destroy();    
     });
    
-    std::cout << "openning\n"; 
     window->open();
     backend->enterLoop();
 
