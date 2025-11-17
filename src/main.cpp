@@ -2,6 +2,7 @@
 #include <hyprtoolkit/core/Backend.hpp>
 #include <hyprtoolkit/core/CoreMacros.hpp>
 
+#include <hyprtoolkit/types/SizeType.hpp>
 #include <hyprtoolkit/window/Window.hpp>
 #include <hyprtoolkit/element/Rectangle.hpp>
 #include <hyprtoolkit/element/RowLayout.hpp>
@@ -53,27 +54,49 @@ int main(int argc, char** argv, char** envp) {
             ->exclusiveZone(30)
             ->exclusiveEdge(XDG_TOPLEVEL_RESIZE_EDGE_NONE)
             ->commence();
-   // window->m_rootElement->addChild(CRectangleBuilder::begin()->color([] { return backend->getPalette()->m_colors.background; })->commence());
-
-    auto layout = CColumnLayoutBuilder::begin()->size({CDynamicSize::HT_SIZE_PERCENT, CDynamicSize::HT_SIZE_PERCENT, {1.F, 1.F}})->commence();
-    layout->setMargin(0);
-
-    auto layoutInner = CRowLayoutBuilder::begin()->size({CDynamicSize::HT_SIZE_PERCENT, CDynamicSize::HT_SIZE_AUTO, {1.F, 1.F}})->commence();
-
-    window->m_rootElement->addChild(layout);
-
-    layout->addChild(layoutInner);
-    layoutInner->setGrow(true);
-    layoutInner->setPositionMode(Hyprtoolkit::IElement::HT_POSITION_ABSOLUTE);
-    layoutInner->setPositionFlag(Hyprtoolkit::IElement::HT_POSITION_FLAG_HCENTER, true);
-
+  
+    auto spacer = CNullBuilder::begin()->commence();
+    spacer->setGrow(true);
+   
     auto button = CButtonBuilder::begin()->label("My Label")->onMainClick([](auto){
             std::println("{}", std::chrono::system_clock::now());
             })->commence();
     Clock c; 
-    layoutInner->addChild(button);
-    layoutInner->addChild(c.getLabel());
+    c.getLabel()->setPositionFlag(IElement::HT_POSITION_FLAG_RIGHT,true);
+     
+    auto layout = CColumnLayoutBuilder::begin()->size({CDynamicSize::HT_SIZE_PERCENT, CDynamicSize::HT_SIZE_PERCENT, {1.F, 1.F}})->commence();
+    layout->setMargin(0);
 
+    auto layoutInner = CRowLayoutBuilder::begin()->size({CDynamicSize::HT_SIZE_PERCENT, CDynamicSize::HT_SIZE_AUTO, {1.F, 1.F}})->commence();
+    
+    auto leftLayout = CRowLayoutBuilder::begin()->commence();
+    auto leftLayoutInner = CRowLayoutBuilder::begin()->commence();
+    
+    auto centerLayout = CRowLayoutBuilder::begin()->commence();
+    centerLayout->setGrow(true);
+    auto centerLayoutInner = CRowLayoutBuilder::begin()->commence();
+
+
+    auto rightLayout = CRowLayoutBuilder::begin()->commence();
+    auto rightLayoutInner = CRowLayoutBuilder::begin()->commence();
+    
+
+    window->m_rootElement->addChild(layout);
+
+    layout->addChild(layoutInner);
+    layoutInner->addChild(leftLayout);
+    layoutInner->addChild(centerLayout);
+    layoutInner->addChild(rightLayout); 
+    layoutInner->setPositionMode(Hyprtoolkit::IElement::HT_POSITION_ABSOLUTE);
+    layoutInner->setPositionFlag(Hyprtoolkit::IElement::HT_POSITION_FLAG_HCENTER, true);
+    
+    leftLayout->addChild(leftLayoutInner);
+    centerLayout->addChild(centerLayoutInner);
+    rightLayout->addChild(rightLayoutInner);
+
+    leftLayoutInner->addChild(button);
+    rightLayoutInner->addChild(spacer);
+    rightLayoutInner->addChild(c.getLabel());
     window->m_events.closeRequest.listenStatic([w = WP<IWindow>{window}] {
         w->close();
         backend->destroy();    
