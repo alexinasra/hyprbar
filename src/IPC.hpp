@@ -43,7 +43,7 @@ class IPC {
 
   std::thread ipcThread_;
   std::mutex callbackMutex_;
-  util::JsonParser parser_;
+  JsonParser parser_;
   std::list<std::pair<std::string, EventHandler*>> callbacks_;
   int socketfd_;  // the hyprland socket file descriptor
   pid_t socketOwnerPid_;
