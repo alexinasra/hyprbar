@@ -9,7 +9,7 @@
 
 #include "json.hpp"
 
-namespace waybar::modules::hyprland {
+namespace hyprbar {
 
 class EventHandler {
  public:

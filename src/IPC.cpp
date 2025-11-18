@@ -12,7 +12,7 @@
 #include <filesystem>
 #include <string>
 
-namespace waybar::modules::hyprland {
+namespace hyprbar {
 
 std::filesystem::path IPC::socketFolder_;
 

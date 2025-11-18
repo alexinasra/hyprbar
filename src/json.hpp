@@ -16,7 +16,7 @@ struct fmt::formatter<Json::Value> : ostream_formatter {};
 
 #endif
 
-namespace waybar::util {
+namespace hyprbar {
 
 class JsonParser {
  public:
