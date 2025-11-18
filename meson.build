@@ -15,7 +15,8 @@ dependencies = [
   dependency('hyprtoolkit', version: '>=0.2.2'),
   dependency('pixman-1'),
   dependency('libdrm'),
-  dependency('threads')
+  dependency('threads'),
+  dependency('spdlog', version : ['>=1.15.2'], fallback : ['spdlog', 'spdlog_dep'], default_options : ['std_format=disabled', 'tests=disabled'])
 ]
 
 exe = executable(
