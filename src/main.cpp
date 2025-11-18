@@ -1,3 +1,4 @@
+#include "src/IPC.hpp"
 #include "src/elements/clock.hpp"
 #include <hyprtoolkit/core/Backend.hpp>
 #include <hyprtoolkit/core/CoreMacros.hpp>
@@ -22,7 +23,9 @@
 #include <hyprutils/string/String.hpp>
 #include <chrono>
 #include <print>
-
+#include <spdlog/spdlog.h>
+#include "spdlog/sinks/stdout_color_sinks.h" 
+#include "src/elements/workspaces.hpp"
 
 using namespace Hyprutils::Memory;
 using namespace Hyprutils::Math;
@@ -38,6 +41,9 @@ static SP<IBackend> backend;
 
 int main(int argc, char** argv, char** envp) {
     //setenv("HT_QUIET", "1", true);
+    auto default_logger = spdlog::stdout_color_st("HBAR");
+    spdlog::set_default_logger(default_logger);
+
     backend = IBackend::create();
 
     auto window =
@@ -58,12 +64,9 @@ int main(int argc, char** argv, char** envp) {
     auto spacer = CNullBuilder::begin()->commence();
     spacer->setGrow(true);
    
-    auto button = CButtonBuilder::begin()->label("My Label")->onMainClick([](auto){
-            std::println("{}", std::chrono::system_clock::now());
-            })->commence();
     Clock c; 
     c.getLabel()->setPositionFlag(IElement::HT_POSITION_FLAG_RIGHT,true);
-     
+    Workspaces workspaces; 
     auto layout = CColumnLayoutBuilder::begin()->size({CDynamicSize::HT_SIZE_PERCENT, CDynamicSize::HT_SIZE_PERCENT, {1.F, 1.F}})->commence();
     layout->setMargin(0);
 
@@ -94,7 +97,7 @@ int main(int argc, char** argv, char** envp) {
     centerLayout->addChild(centerLayoutInner);
     rightLayout->addChild(rightLayoutInner);
 
-    leftLayoutInner->addChild(button);
+    leftLayoutInner->addChild(workspaces.getWorkspacesLayout());
     rightLayoutInner->addChild(spacer);
     rightLayoutInner->addChild(c.getLabel());
     window->m_events.closeRequest.listenStatic([w = WP<IWindow>{window}] {
