@@ -16,7 +16,9 @@ dependencies = [
   dependency('pixman-1'),
   dependency('libdrm'),
   dependency('threads'),
-  dependency('spdlog', version : ['>=1.15.2'], fallback : ['spdlog', 'spdlog_dep'], default_options : ['std_format=disabled', 'tests=disabled'])
+  dependency('fmt', version : ['>=8.1.1'], fallback : ['fmt', 'fmt_dep']),
+  dependency('spdlog', version : ['>=1.15.2'], fallback : ['spdlog', 'spdlog_dep'], default_options : ['std_format=disabled', 'tests=disabled']),
+  dependency('jsoncpp', version : ['>=1.9.2'], fallback : ['jsoncpp', 'jsoncpp_dep']),
 ]
 
 exe = executable(
