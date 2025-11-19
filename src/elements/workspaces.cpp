@@ -1,7 +1,9 @@
 #include "workspaces.hpp"
 #include <algorithm>
 #include <hyprtoolkit/element/Button.hpp>
+#include <hyprtoolkit/element/Rectangle.hpp>
 #include <hyprtoolkit/element/RowLayout.hpp>
+#include <hyprtoolkit/palette/Color.hpp>
 #include <hyprutils/memory/SharedPtr.hpp>
 #include <json/value.h>
 #include <spdlog/spdlog.h>
@@ -65,14 +67,27 @@ void Workspaces::rebuild() {
     sortJsonArray(reply);
     for (auto const &workspace : reply) {
         auto id =  workspace["id"].asInt();
-        std::string lbl = activeId == id ? "* " : "";
-        lbl.append(workspace["id"].asString());
+        std::string lbl = workspace["id"].asString();
+        if(workspace["name"].asString() != workspace["id"].asString()) {
+            lbl.append(" : " + workspace["name"].asString());
+        }
+        std::string dispatchChange = "dispatch workspace " + workspace["id"].asString();
+        auto cb = [dispatchChange = dispatchChange, this](auto){
+            ipc.getSocket1Reply(dispatchChange);       
+        };
         auto btn = Hyprtoolkit::CButtonBuilder::begin()
             ->label(lbl.c_str())
-            ->onMainClick([this, workspace = workspace](auto) {
-                ipc.getSocket1Reply("dispatch workspace "+workspace["id"].asString());       
-            })
+            ->onMainClick(cb)
+            ->noBg(activeId != id)
             ->commence();
+        
+        if (activeId == id) {
+            auto bg = Hyprtoolkit::CRectangleBuilder::begin()
+                ->color([](){ return Hyprtoolkit::CHyprColor{1.F, 1.F, 1.F, 0.1F}; })
+                ->commence();
+            btn->addChild(bg);
+
+        }
         workspacesLayout->addChild(btn);
     }
 
