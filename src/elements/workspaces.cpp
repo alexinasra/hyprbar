@@ -4,11 +4,12 @@
 #include <hyprtoolkit/element/Rectangle.hpp>
 #include <hyprtoolkit/element/RowLayout.hpp>
 #include <hyprtoolkit/palette/Color.hpp>
+#include <hyprtoolkit/types/SizeType.hpp>
 #include <hyprutils/memory/SharedPtr.hpp>
 #include <json/value.h>
 #include <spdlog/spdlog.h>
 #include <vector>
-
+#include <chrono>
 
 void sortJsonArray(Json::Value& jsonArray) {
     // 1. Copy the Json::Value elements to a std::vector
@@ -78,19 +79,18 @@ void Workspaces::rebuild() {
         auto btn = Hyprtoolkit::CButtonBuilder::begin()
             ->label(lbl.c_str())
             ->onMainClick(cb)
-            ->noBg(activeId != id)
+            ->size(Hyprtoolkit::CDynamicSize({Hyprtoolkit::CDynamicSize::HT_SIZE_AUTO, Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, { 40, 30 }}))
             ->commence();
-        
         if (activeId == id) {
             auto bg = Hyprtoolkit::CRectangleBuilder::begin()
                 ->color([](){ return Hyprtoolkit::CHyprColor{1.F, 1.F, 1.F, 0.1F}; })
                 ->commence();
+            bg->setGrow(true);
             btn->addChild(bg);
 
         }
         workspacesLayout->addChild(btn);
     }
-
-
-
+    
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
 }
