@@ -60,12 +60,11 @@ int main(int argc, char** argv, char** envp) {
             ->exclusiveZone(30)
             ->exclusiveEdge(XDG_TOPLEVEL_RESIZE_EDGE_NONE)
             ->commence();
-  
+ 
     auto spacer = CNullBuilder::begin()->commence();
     spacer->setGrow(true);
    
     Clock c; 
-    c.getLabel()->setPositionFlag(IElement::HT_POSITION_FLAG_RIGHT,true);
     Workspaces workspaces; 
     auto layout = CColumnLayoutBuilder::begin()->size({CDynamicSize::HT_SIZE_PERCENT, CDynamicSize::HT_SIZE_PERCENT, {1.F, 1.F}})->commence();
     layout->setMargin(0);
