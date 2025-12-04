@@ -1,4 +1,4 @@
-#include "workspaces.hpp"
+#include "Workspaces.hpp"
 #include <algorithm>
 #include <hyprtoolkit/element/Button.hpp>
 #include <hyprtoolkit/element/Rectangle.hpp>
@@ -12,20 +12,15 @@
 #include <chrono>
 
 void sortJsonArray(Json::Value& jsonArray) {
-    // 1. Copy the Json::Value elements to a std::vector
     std::vector<Json::Value> values;
     for (const auto& value : jsonArray) {
         values.push_back(value);
     }
 
-    // 2. Use std::sort with a lambda comparator
     std::sort(values.begin(), values.end(), [&](const Json::Value& a, const Json::Value& b) {
-        // Access the values to compare by key
-        // Ensure the values are of the correct type (e.g., string) before comparison
         return a["id"].asInt() < b["id"].asInt();
     });
 
-    // 3. Clear the original Json::Value and repopulate it in the new order
     jsonArray.clear();
     for (const auto& value : values) {
         jsonArray.append(value);
@@ -33,8 +28,8 @@ void sortJsonArray(Json::Value& jsonArray) {
 }
 
 
-Workspaces::Workspaces() {
-    workspacesLayout = Hyprtoolkit::CRowLayoutBuilder::begin()->commence();
+hyprbar::Workspaces::Workspaces() {
+    workspacesLayout = CRowLayoutBuilder::begin()->commence();
     
     rebuild();
     
@@ -52,7 +47,7 @@ Workspaces::Workspaces() {
     ipc.registerForIPC("configreloaded", this);
 }
 
-void Workspaces::onEvent(const std::string &ev) {
+void hyprbar::Workspaces::onEvent(const std::string &ev) {
 
     std::lock_guard<std::mutex> lock(ipc_mutex);
     spdlog::info("Incoming Event");
@@ -60,7 +55,7 @@ void Workspaces::onEvent(const std::string &ev) {
     rebuild();
 }
 
-void Workspaces::rebuild() {
+void hyprbar::Workspaces::rebuild() {
     workspacesLayout->clearChildren();
     auto reply = ipc.getSocket1JsonReply("activeworkspace");
     auto activeId = reply["id"].asInt();
@@ -79,11 +74,11 @@ void Workspaces::rebuild() {
         auto btn = Hyprtoolkit::CButtonBuilder::begin()
             ->label(lbl.c_str())
             ->onMainClick(cb)
-            ->size(Hyprtoolkit::CDynamicSize({Hyprtoolkit::CDynamicSize::HT_SIZE_AUTO, Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, { 40, 30 }}))
+            ->size({CDynamicSize::HT_SIZE_AUTO, Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, { 40, 30 }})
             ->commence();
         if (activeId == id) {
-            auto bg = Hyprtoolkit::CRectangleBuilder::begin()
-                ->color([](){ return Hyprtoolkit::CHyprColor{1.F, 1.F, 1.F, 0.1F}; })
+            auto bg = CRectangleBuilder::begin()
+                ->color([](){ return CHyprColor{1.F, 1.F, 1.F, 0.1F}; })
                 ->commence();
             bg->setGrow(true);
             btn->addChild(bg);

@@ -27,10 +27,9 @@ exe = executable(
   'src/json.hpp',
   'src/IPC.hpp',
   'src/IPC.cpp',
-  'src/elements/workspaces.hpp',
-  'src/elements/workspaces.cpp',
-  'src/elements/clock.hpp',
-  'src/elements/clock.cpp',
+  'src/elements/Workspaces.cpp',
+  'src/elements/Clock.cpp',
+  'src/Hyprbar.cpp',
   install : true,
   dependencies : dependencies,
 )
