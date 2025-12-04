@@ -29,7 +29,9 @@ void sortJsonArray(Json::Value& jsonArray) {
 
 
 hyprbar::Workspaces::Workspaces() {
-    workspacesLayout = CRowLayoutBuilder::begin()->commence();
+    workspacesLayout = CRowLayoutBuilder::begin()
+        ->gap(4)
+        ->commence();
     
     rebuild();
     
