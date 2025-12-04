@@ -20,7 +20,7 @@ public:
     inline void setFormat(std::string f){ format=f; };
     inline CSharedPointer<IElement> getWidget() { return layout; }
 private:
-    std::string format = "%H:%M";
+    std::string format = "%c";
     CSharedPointer<CButtonElement> clockLabel;
     CSharedPointer<CColumnLayoutElement> layout;
     std::mutex timeUpdateMutex;
