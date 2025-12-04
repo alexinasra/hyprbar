@@ -13,9 +13,7 @@
 hyprbar::Clock::Clock() {
     layout = CColumnLayoutBuilder::begin()->commence();
     clockLabel = Hyprtoolkit::CButtonBuilder::begin()
-        ->size({Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, Hyprtoolkit::CDynamicSize::HT_SIZE_ABSOLUTE, {80, 30}})
         ->commence();
-    
     layout->addChild(clockLabel);
     
     std::thread tupdateThread([&] {
