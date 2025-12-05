@@ -67,7 +67,7 @@ hyprbar::Battery::Battery() {
             } 
             udev_enumerate_unref(enumerate);
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(1)); 
+            std::this_thread::sleep_for(std::chrono::milliseconds(300)); 
         }
  
     });
