@@ -7,6 +7,7 @@ project(
 )
 
 dependencies = [
+  dependency('libudev'),
   dependency('hyprland'),
   dependency('wayland-client'),
   dependency('wayland-protocols'),
@@ -27,6 +28,7 @@ exe = executable(
   'src/json.hpp',
   'src/IPC.hpp',
   'src/IPC.cpp',
+  'src/elements/Battery.cpp',
   'src/elements/Workspaces.cpp',
   'src/elements/Clock.cpp',
   'src/Hyprbar.cpp',
