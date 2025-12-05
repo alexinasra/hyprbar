@@ -21,7 +21,6 @@
 #include <hyprutils/string/ConstVarList.hpp>
 #include <hyprutils/string/String.hpp>
 #include <spdlog/spdlog.h>
-#include "spdlog/sinks/stdout_color_sinks.h" 
 
 using namespace Hyprutils::Memory;
 using namespace Hyprutils::Math;
@@ -36,6 +35,8 @@ static SP<IBackend> backend;
 
 
 int main(int argc, char** argv, char** envp) {
+   
+
     //setenv("HT_QUIET", "1", true);
     backend = IBackend::create();
     hyprbar::Hyprbar hbar;
