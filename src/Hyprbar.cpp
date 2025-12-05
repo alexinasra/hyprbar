@@ -32,6 +32,7 @@ hyprbar::Hyprbar::Hyprbar () {
     //Right side layout
     rightLayout = CRowLayoutBuilder::begin()
         ->commence();
+    rightLayout->addChild(battery.getWidget());
     rightLayout->addChild(clock.getWidget()); 
     
     // main container layout
