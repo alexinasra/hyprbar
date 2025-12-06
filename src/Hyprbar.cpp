@@ -28,6 +28,7 @@ hyprbar::Hyprbar::Hyprbar () {
     centerLayout = CRowLayoutBuilder::begin()
         ->commence();
     centerLayout->setGrow(true);
+    centerLayout->addChild(activeWindow.getWidget());
 
     //Right side layout
     rightLayout = CRowLayoutBuilder::begin()

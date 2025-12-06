@@ -1,6 +1,7 @@
 #pragma once
 
 #include "elements/Workspaces.hpp"
+#include "src/elements/ActiveWindow.hpp"
 #include "src/elements/Battery.hpp"
 #include "src/elements/Clock.hpp"
 #include <hyprland/protocols/wlr-layer-shell-unstable-v1.hpp>
@@ -37,7 +38,8 @@ private:
     CSharedPointer<CRowLayoutElement> rightLayout;
     Workspaces workspaces;
     Clock clock;
-    Battery battery;    
+    Battery battery; 
+    ActiveWindow activeWindow;
     int height = 30;
 };
 }
