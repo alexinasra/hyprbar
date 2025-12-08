@@ -1,4 +1,5 @@
 #include "Hyprbar.hpp"
+#include "src/Modules.hpp"
 #include <hyprtoolkit/element/Rectangle.hpp>
 
 
@@ -18,23 +19,23 @@ hyprbar::Hyprbar::Hyprbar () {
         ->exclusiveZone(height)
         ->exclusiveEdge(XDG_TOPLEVEL_RESIZE_EDGE_NONE)
         ->commence();
-   
+ 
     // Left side layout
     leftLayout = CRowLayoutBuilder::begin()
         ->commence();
-    leftLayout->addChild(workspaces.getWidget());
+    leftLayout->addChild(Modules::inst().getModule("Workspaces")->getWidget());
 
     //Center layout
     centerLayout = CRowLayoutBuilder::begin()
         ->commence();
     centerLayout->setGrow(true);
-    centerLayout->addChild(activeWindow.getWidget());
+    centerLayout->addChild(Modules::inst().getModule("ActiveWindow")->getWidget());
 
     //Right side layout
     rightLayout = CRowLayoutBuilder::begin()
         ->commence();
-    rightLayout->addChild(battery.getWidget());
-    rightLayout->addChild(clock.getWidget()); 
+    rightLayout->addChild(Modules::inst().getModule("Battery")->getWidget());
+    rightLayout->addChild(Modules::inst().getModule("Clock")->getWidget()); 
     
     // main container layout
     containerLayout = CRowLayoutBuilder::begin()

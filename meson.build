@@ -32,6 +32,7 @@ exe = executable(
   'src/elements/Battery.cpp',
   'src/elements/Workspaces.cpp',
   'src/elements/Clock.cpp',
+  'src/Modules.cpp',
   'src/Hyprbar.cpp',
   install : true,
   dependencies : dependencies,

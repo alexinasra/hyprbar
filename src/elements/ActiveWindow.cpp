@@ -7,6 +7,7 @@
 hyprbar::ActiveWindow::ActiveWindow() {
     layout = CRowLayoutBuilder::begin()
         ->commence();
+    layout->setGrow(true);
     titleLabel = CTextBuilder::begin()->commence(); 
     layout->addChild(titleLabel);
     rebuild();

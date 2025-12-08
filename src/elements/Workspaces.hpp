@@ -2,6 +2,8 @@
 
 
 #include "src/IPC.hpp"
+#include "src/elements/IModule.hpp"
+#include <hyprtoolkit/element/Element.hpp>
 #include <hyprtoolkit/element/RowLayout.hpp>
 #include <hyprutils/memory/SharedPtr.hpp>
 #include <mutex>
@@ -10,11 +12,10 @@ using namespace Hyprtoolkit;
 using namespace Hyprutils::Memory;
 
 namespace hyprbar {
-class Workspaces : public EventHandler
-{
+class Workspaces : public IModule, EventHandler {
 public:
     Workspaces();
-    inline CSharedPointer<CRowLayoutElement> getWidget() { return workspacesLayout; };
+    CSharedPointer<IElement> getWidget() override { return workspacesLayout; };
 
 private:
     IPC& ipc = IPC::inst();
