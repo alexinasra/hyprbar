@@ -6,6 +6,8 @@ project(
   default_options : ['warning_level=3', 'cpp_std=c++23'],
 )
 
+add_project_arguments('-DGLOBAL_DEFINE', '-Wall', language: 'cpp')
+
 dependencies = [
   dependency('libudev'),
   dependency('hyprland'),

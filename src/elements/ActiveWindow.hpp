@@ -29,6 +29,13 @@ private:
     void rebuild();
 };
 
+
+class ActiveWindowBuilder : public IModuleBuilder {
+public:
+    ActiveWindowBuilder() {};
+    ~ActiveWindowBuilder() override {};
+    ActiveWindow* create() override;
+};
 }
 
 

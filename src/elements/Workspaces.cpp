@@ -91,3 +91,9 @@ void hyprbar::Workspaces::rebuild() {
     
     std::this_thread::sleep_for(std::chrono::milliseconds(300));
 }
+
+
+hyprbar::Workspaces * hyprbar::WorkspacesBuilder::create(){
+    return new Workspaces();
+}
+

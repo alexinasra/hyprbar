@@ -34,3 +34,6 @@ hyprbar::Clock::Clock() {
     tupdateThread.detach(); 
 };
 
+hyprbar::Clock* hyprbar::ClockBuilder::create() {
+    return new Clock();
+}

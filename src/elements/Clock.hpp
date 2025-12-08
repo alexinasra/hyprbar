@@ -29,4 +29,10 @@ private:
 
 };
 
+class ClockBuilder : public IModuleBuilder {
+public:
+    ClockBuilder(){};
+    ~ClockBuilder() override {};
+    Clock* create() override;
+};
 }

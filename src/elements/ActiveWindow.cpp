@@ -31,4 +31,8 @@ void hyprbar::ActiveWindow::rebuild() {
     titleLabel->rebuild()
         ->text(wtitle.c_str())
         ->commence();
-} 
+}
+
+hyprbar::ActiveWindow* hyprbar::ActiveWindowBuilder::create() {
+    return new ActiveWindow();
+}

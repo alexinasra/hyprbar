@@ -74,3 +74,8 @@ hyprbar::Battery::Battery() {
     th.detach();   
 }
 
+hyprbar::IModule* hyprbar::BatteryBuilder::create() {
+    return new Battery();
+}
+
+

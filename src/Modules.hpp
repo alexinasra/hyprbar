@@ -1,7 +1,8 @@
 #pragma once 
 
+#include <algorithm>
 #include <memory>
-#include <unordered_map>
+#include <map>
 
 
 
@@ -21,7 +22,7 @@ public:
     //void removeModule(const std::string n);
 private:
     Modules();
-    std::unordered_map<std::string, std::unique_ptr<IModule>> m_map;    
+    std::map<std::string, std::unique_ptr<IModuleBuilder>> m_map;    
 };
 }
 

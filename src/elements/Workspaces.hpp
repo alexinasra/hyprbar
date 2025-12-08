@@ -26,4 +26,11 @@ private:
 
 };
 
+
+class WorkspacesBuilder: public IModuleBuilder {
+public:
+    WorkspacesBuilder(){};
+    ~WorkspacesBuilder() override {};
+    Workspaces* create() override;
+};
 }

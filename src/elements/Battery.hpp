@@ -24,4 +24,11 @@ private:
     CSharedPointer<IElement> layout;
 };
 
+
+class BatteryBuilder : public IModuleBuilder {
+public:
+    BatteryBuilder() {};
+    ~BatteryBuilder() override {};
+    IModule* create() override;
+};
 }
