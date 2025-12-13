@@ -1,6 +1,7 @@
 #include "ActiveWindow.hpp"
 #include <hyprtoolkit/element/RowLayout.hpp>
 #include <hyprtoolkit/element/Text.hpp>
+#include <spdlog/spdlog.h>
 
 
 
@@ -16,6 +17,7 @@ hyprbar::ActiveWindow::ActiveWindow() {
 
 void hyprbar::ActiveWindow::onEvent(const std::string &ev) {
     std::lock_guard<std::mutex> lock(ipc_mutex);
+    spdlog::info(ev);
     rebuild();
 }
 

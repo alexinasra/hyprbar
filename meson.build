@@ -30,6 +30,7 @@ exe = executable(
   'src/json.hpp',
   'src/IPC.hpp',
   'src/IPC.cpp',
+  'src/config/ConfigManager.cpp',
   'src/elements/ActiveWindow.cpp',
   'src/elements/Battery.cpp',
   'src/elements/Workspaces.cpp',

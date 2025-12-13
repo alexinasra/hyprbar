@@ -5,8 +5,7 @@
 #include <hyprtoolkit/element/Element.hpp>
 #include <hyprtoolkit/element/RowLayout.hpp>
 #include <hyprtoolkit/element/Text.hpp>
-#include <hyprutils/memory/SharedPtr.hpp>
-
+#include "../helpers/Memory.hpp" 
 
 
 using namespace Hyprtoolkit;
@@ -19,10 +18,10 @@ class ActiveWindow : public IModule, EventHandler {
 public:
     ActiveWindow();
     ~ActiveWindow() override;
-    CSharedPointer<IElement> getWidget() override { return layout; };
+    SP<IElement> getWidget() override { return layout; };
 private:
-    CSharedPointer<CRowLayoutElement> layout;
-    CSharedPointer<CTextElement> titleLabel;
+    SP<CRowLayoutElement> layout;
+    SP<CTextElement> titleLabel;
     IPC& ipc = IPC::inst();
     std::mutex ipc_mutex;
     void onEvent(const std::string& e) override;

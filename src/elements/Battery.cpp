@@ -1,7 +1,9 @@
 #include  "Battery.hpp"
+#include <hyprlang.hpp>
 #include <hyprtoolkit/element/Text.hpp>
 #include <libudev.h>
 #include <mutex>
+#include <spdlog/spdlog.h>
 #include <sstream>
 #include <thread>
 
@@ -19,8 +21,8 @@ hyprbar::Battery::Battery() {
         ->commence();
     auto batterylabel = CTextBuilder::begin()
        ->text("NO BATTERY")
+       ->fontFamily(Hyprlang::STRING{"FontAwesome"})
        ->commence(); 
-
 
     layout->addChild(batterylabel);
 
@@ -33,22 +35,17 @@ hyprbar::Battery::Battery() {
 
     std::thread th([batterylabel, this]() {
         /* Get the file descriptor for the monitor */
-
         while(true) {
-
             struct udev_enumerate *enumerate;
             struct udev_list_entry *devices, *dev_list_entry;
 
             enumerate = udev_enumerate_new(udev);
-
             udev_enumerate_add_match_subsystem(enumerate, "power_supply");
-           
             udev_enumerate_scan_devices(enumerate);
- 
             devices = udev_enumerate_get_list_entry(enumerate);
             udev_list_entry_foreach(dev_list_entry, devices) {
+            
             const char *path;
-        
             struct udev_device *dev;
             path = udev_list_entry_get_name(dev_list_entry);
             dev = udev_device_new_from_syspath(udev, path);
@@ -56,22 +53,45 @@ hyprbar::Battery::Battery() {
             if (dev) {
                 const char *type = udev_device_get_property_value(dev, "POWER_SUPPLY_TYPE");
                 if (type && strcmp(type, "Battery") == 0) {
-                        std::ostringstream txt;
-                        txt << udev_device_get_sysattr_value(dev, "capacity") << " % ["  << udev_device_get_sysattr_value(dev,"status") <<"]";
-                        mtx.lock();
-                        batterylabel->rebuild()->text(txt.str())->commence();
-                        mtx.unlock();
-                    }
-            
+                    std::string c = udev_device_get_sysattr_value(dev, "capacity");
+                    std::string s = udev_device_get_sysattr_value(dev,"status");
+                    std::string text = create_label_text(c,s);
+                    mtx.lock();
+                    batterylabel->rebuild()
+                        ->text(text.c_str())
+                        ->commence();
+                    mtx.unlock();
+                
                 }
-            } 
-            udev_enumerate_unref(enumerate);
+            
+            }
+        } 
+        udev_enumerate_unref(enumerate);
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(300)); 
-        }
- 
-    });
+        std::this_thread::sleep_for(std::chrono::milliseconds(300)); 
+    }});
     th.detach();   
+}
+
+std::string hyprbar::Battery::create_label_text(std::string c, std::string s) {
+    std::ostringstream txt;
+    std::string status = ""; //full battery 
+    int cap = std::atoi(c.c_str());
+    if(cap < 75) {
+        status = "";
+    } else if(cap < 50) {
+        status = "";
+    } else if(cap < 25) {
+        status = "";
+    } else if(cap < 5) {
+        status = "";
+    }  
+    if (s.compare("Discharging") != 0) {
+        status += "";
+    }
+
+    txt << c << '%' << status;
+    return txt.str();
 }
 
 hyprbar::IModule* hyprbar::BatteryBuilder::create() {

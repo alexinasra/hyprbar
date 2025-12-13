@@ -1,22 +1,23 @@
 #include "Hyprbar.hpp"
 #include "src/Modules.hpp"
+#include "src/config/ConfigManager.hpp"
+#include <hyprlang.hpp>
 #include <hyprtoolkit/element/Rectangle.hpp>
-
+#include <hyprutils/memory/UniquePtr.hpp>
 
 
 
 hyprbar::Hyprbar::Hyprbar () {
+    static auto BAR_HEIGHT  = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "height");
     window = Hyprtoolkit::CWindowBuilder::begin()
-        ->appTitle("Hyprpanel")
-        ->appClass("hypr-panel")
+        ->appTitle("Hyprbar")
+        ->appClass("Hyprbar")
         ->marginTopLeft({0,0})
-        ->maxSize({5000,height})
-        ->minSize({100,height})
-        ->preferredSize({1920,height})
+        ->preferredSize({1920, (int) *BAR_HEIGHT})
         ->type(Hyprtoolkit::HT_WINDOW_LAYER)
         ->layer(ZWLR_LAYER_SHELL_V1_LAYER_BOTTOM)
         ->anchor(XDG_POSITIONER_ANCHOR_TOP)
-        ->exclusiveZone(height)
+        ->exclusiveZone(*BAR_HEIGHT)
         ->exclusiveEdge(XDG_TOPLEVEL_RESIZE_EDGE_NONE)
         ->commence();
  
@@ -53,15 +54,15 @@ hyprbar::Hyprbar::Hyprbar () {
     window->m_rootElement->addChild(containerLayout);
 }
 
-void hyprbar::Hyprbar::addToLeftLayout(CSharedPointer<IElement> widget) {
+void hyprbar::Hyprbar::addToLeftLayout(SP<IElement> widget) {
     leftLayout->addChild(widget);
 }
 
-void hyprbar::Hyprbar::addToCenterLayout(CSharedPointer<IElement> widget) {
+void hyprbar::Hyprbar::addToCenterLayout(SP<IElement> widget) {
     centerLayout->addChild(widget);
 }
 
-void hyprbar::Hyprbar::addToRightLayout(CSharedPointer<IElement> widget) {
+void hyprbar::Hyprbar::addToRightLayout(SP<IElement> widget) {
     rightLayout->addChild(widget);
 }
 

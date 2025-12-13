@@ -8,7 +8,8 @@
 #include <hyprtoolkit/core/Backend.hpp>
 #include <hyprtoolkit/element/RowLayout.hpp>
 #include <hyprtoolkit/window/Window.hpp>
-#include <hyprutils/memory/SharedPtr.hpp>
+#include "./helpers/Memory.hpp"
+
 using namespace Hyprutils::Memory;
 using namespace Hyprutils::Math;
 using namespace Hyprtoolkit;
@@ -19,19 +20,19 @@ class Hyprbar {
 public:
     Hyprbar();
     virtual ~Hyprbar(){};
-    inline CSharedPointer<IWindow> getWindow() { return window; }; 
+    inline SP<IWindow> getWindow() { return window; }; 
     void show();
     void hide();
 
-    void addToLeftLayout(CSharedPointer<IElement> widget);
-    void addToCenterLayout(CSharedPointer<IElement> widget);
-    void addToRightLayout(CSharedPointer<IElement> widget);
+    void addToLeftLayout(SP<IElement> widget);
+    void addToCenterLayout(SP<IElement> widget);
+    void addToRightLayout(SP<IElement> widget);
 private:
-    CSharedPointer<IWindow> window;
-    CSharedPointer<CRowLayoutElement> containerLayout;
-    CSharedPointer<CRowLayoutElement> leftLayout;
-    CSharedPointer<CRowLayoutElement> centerLayout;
-    CSharedPointer<CRowLayoutElement> rightLayout;
+    SP<IWindow> window;
+    SP<CRowLayoutElement> containerLayout;
+    SP<CRowLayoutElement> leftLayout;
+    SP<CRowLayoutElement> centerLayout;
+    SP<CRowLayoutElement> rightLayout;
     int height = 30;
 };
 }

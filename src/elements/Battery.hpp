@@ -7,7 +7,8 @@
 #include <spdlog/spdlog.h>
 #include <unistd.h> // For read()
 #include <hyprtoolkit/element/Element.hpp>
-#include <hyprutils/memory/SharedPtr.hpp>
+#include "../helpers/Memory.hpp"
+
 using namespace Hyprtoolkit;
 using namespace Hyprutils::Memory;
 
@@ -17,11 +18,12 @@ class Battery : public IModule {
 public:
     Battery();
     ~Battery() override;
-    CSharedPointer<IElement> getWidget() override { return layout; };
+    SP<IElement> getWidget() override { return layout; };
 private:
     struct udev *udev;
     struct udev_monitor *mon;
-    CSharedPointer<IElement> layout;
+    SP<IElement> layout;
+    std::string create_label_text(std::string c, std::string s);
 };
 
 

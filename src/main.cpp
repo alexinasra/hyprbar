@@ -22,31 +22,44 @@
 #include <hyprutils/string/String.hpp>
 #include <spdlog/spdlog.h>
 
+#include "./helpers/Memory.hpp"
+#include "./config/ConfigManager.hpp"
+
+
 using namespace Hyprutils::Memory;
 using namespace Hyprutils::Math;
 using namespace Hyprutils::String;
 using namespace Hyprtoolkit;
 
-#define SP CSharedPointer
-#define WP CWeakPointer
-#define UP CUniquePointer
+
+using namespace hyprbar;
 
 static SP<IBackend> backend;
+
 
 
 int main(int argc, char** argv, char** envp) {
    
 
-    //setenv("HT_QUIET", "1", true);
+    setenv("HT_QUIET", "1", true);
+    spdlog::info("Starting Hyprbar");
+
+
+    spdlog::info("Configuring config manager");
+    g_configManager = makeUnique<CConfigManager>();
+    g_configManager->parse();
+
+
+    spdlog::info("Configuring Backend");
     backend = IBackend::create();
     hyprbar::Hyprbar hbar;
     CSharedPointer<IWindow> window = hbar.getWindow();
-
     window->m_events.closeRequest.listenStatic([w = WP<IWindow>{window}] {
         w->close();
         backend->destroy();    
     });
-   
+    
+    spdlog::info("Opening Window");
     window->open();
     backend->enterLoop();
 
