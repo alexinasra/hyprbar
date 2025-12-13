@@ -75,19 +75,21 @@ hyprbar::Battery::Battery() {
 
 std::string hyprbar::Battery::create_label_text(std::string c, std::string s) {
     std::ostringstream txt;
-    std::string status = ""; //full battery 
+    std::string status = "\uf240"; //full battery 
     int cap = std::atoi(c.c_str());
     if(cap < 75) {
-        status = "";
+        status = "\uf241";
     } else if(cap < 50) {
-        status = "";
+        status = "\uf242";
     } else if(cap < 25) {
-        status = "";
+        status = "\uf243";
     } else if(cap < 5) {
-        status = "";
+        status = "\uf244";
     }  
-    if (s.compare("Discharging") != 0) {
-        status += "";
+    if (s.compare("Charging") == 0) {
+        status = "\uf5e7";
+    } else if (s.compare("Not charging")==0) {
+        status = "\uf1e6";
     }
 
     txt << c << '%' << status;
