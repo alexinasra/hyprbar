@@ -8,7 +8,8 @@
 
 
 hyprbar::Hyprbar::Hyprbar () {
-    static auto BAR_HEIGHT  = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(g_configManager->m_config.get(), "height");
+    static auto BAR_HEIGHT  = Hyprlang::CSimpleConfigValue<Hyprlang::INT>(
+            g_configManager->m_config.get(), "height");
     window = Hyprtoolkit::CWindowBuilder::begin()
         ->appTitle("Hyprbar")
         ->appClass("Hyprbar")
