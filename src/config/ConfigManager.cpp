@@ -15,6 +15,7 @@ CConfigManager::CConfigManager() : m_inotifyFd(inotify_init()) {
     m_config->addConfigValue("layout:centerlayout:widgets", Hyprlang::STRING{"ActiveWindow"});
     m_config->addConfigValue("layout:rightlayout:widgets", Hyprlang::STRING{"Battery,Clock"});
     m_config->addConfigValue("height", Hyprlang::INT{30});
+    m_config->addConfigValue("clock:format", Hyprlang::STRING{"%c"});
 
     m_config->commence();
 

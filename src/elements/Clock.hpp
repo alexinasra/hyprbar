@@ -6,7 +6,7 @@
 #include <hyprtoolkit/element/ColumnLayout.hpp>
 #include <hyprtoolkit/element/Element.hpp>
 #include <hyprtoolkit/element/Text.hpp>
-#include <hyprutils/memory/SharedPtr.hpp>
+#include "../helpers/Memory.hpp"
 #include <atomic>
 #include <mutex>
 
@@ -18,12 +18,10 @@ namespace hyprbar{
 class Clock : public hyprbar::IModule {
 public:
     Clock();
-    inline void setFormat(std::string f){ format=f; };
-    CSharedPointer<IElement> getWidget() override { return layout; }
+    SP<IElement> getWidget() override { return layout; }
 private:
-    std::string format = "%c";
-    CSharedPointer<CButtonElement> clockLabel;
-    CSharedPointer<CColumnLayoutElement> layout;
+    SP<CTextElement> clockLabel;
+    SP<CColumnLayoutElement> layout;
     std::mutex timeUpdateMutex;
     std::atomic<bool> stopTimeUpdate;
 
